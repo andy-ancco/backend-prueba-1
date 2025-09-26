@@ -2,16 +2,17 @@ from django import forms
 from .models import Visita
 import re
 
+#formulario basado en el modelo visita
 class VisitaForm(forms.ModelForm):
     class Meta:
         model = Visita
-        fields = ['nombre', 'rut', 'motivo_visita', 'hora_entrada', 'hora_salida']
+        fields = ['nombre', 'rut', 'motivo_visita', 'hora_entrada', 'hora_salida'] #campos que se veran en el formulario
         widgets = {
             'motivo_visita': forms.Textarea(
                 attrs={'rows': 4, 'placeholder': 'Ingrese el motivo de la visita...'}
             ),
         }
-        
+        #mensaje de error para cada campo 
         error_messages = {
             'hora_entrada': {
                 'required': 'Por favor, ingresa la hora de entrada.',
@@ -27,16 +28,16 @@ class VisitaForm(forms.ModelForm):
             },
         }
 
-    # --- Validación personalizada para el RUT ---
+#validacion para el rut
     def clean_rut(self):
         rut = self.cleaned_data.get('rut')
 
-        # 1. Validar formato básico con puntos y guion
+        #valida el rut con los puntos y guion
         patron = r'^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$'
         if not re.match(patron, rut):
             raise forms.ValidationError("Formato incorrecto. Ejemplo: 12.345.678-9")
 
-        # 2. Eliminar puntos y guion para validar el dígito verificador
+        #elimina los puntos y el guion para validar el dígito verificador
         rut = rut.replace(".", "").replace("-", "").upper()
 
         if len(rut) < 2:
@@ -49,7 +50,7 @@ class VisitaForm(forms.ModelForm):
         except ValueError:
             raise forms.ValidationError("RUT inválido.")
 
-        # 3. Calcular el dígito verificador
+        #calcula el digito verificador para garantizar que el rut existe
         suma = 0
         multiplicador = 2
         for digit in reversed(str(num)):

@@ -14,7 +14,7 @@
     </a>
   </div>
 
-  <!-- Tabla -->
+  <!--encabezado de la tabla -->
   <div class="overflow-x-auto">
     <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
       <thead>
@@ -25,7 +25,7 @@
             <th class="px-6 py-3 text-sm font-semibold">Motivo</th>
             <th class="px-6 py-3 text-sm font-semibold">Hora Entrada</th>
             <th class="px-6 py-3 text-sm font-semibold">Hora Salida</th>
-            <th class="px-6 py-3 text-sm font-semibold">Acciones</th> <!-- NUEVA COLUMNA -->
+            <th class="px-6 py-3 text-sm font-semibold">Acciones</th> 
         </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@
             <td class="px-6 py-3">{{ visita.hora_entrada }}</td>
             <td class="px-6 py-3">{{ visita.hora_salida }}</td>
             <td class="px-6 py-3">
-                <!-- Botón Eliminar -->
+                <!--botón eliminar-->
                 <a href="{% url 'eliminar_visita' visita.id %}"
                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
                 onclick="return confirm('¿Seguro que deseas eliminar esta visita?')">
