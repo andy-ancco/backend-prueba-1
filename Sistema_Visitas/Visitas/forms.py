@@ -14,6 +14,9 @@ class VisitaForm(forms.ModelForm):
         }
         #mensaje de error para cada campo 
         error_messages = {
+            'motivo_visita':{
+                'required': 'Por favor, ingresa el motivo de tu visita.',
+            },
             'hora_entrada': {
                 'required': 'Por favor, ingresa la hora de entrada.',
             },
