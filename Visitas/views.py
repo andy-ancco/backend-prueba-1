@@ -5,7 +5,7 @@ from .forms import VisitaForm
 #mostrar la listas de visitas
 def lista_visitas(request):
     visitas = Visita.objects.all() #obtiene todas las visitas
-    return render(request, 'Visitas/lista_visitas.html', {'visitas': visitas})
+    return render(request, 'lista_visitas.html', {'visitas': visitas})
 
 #crear una nueva visita
 def nueva_visita(request):
@@ -19,7 +19,7 @@ def nueva_visita(request):
             mensaje_error = "No se pudo guardar la visita. Por favor revise los datos."
     else:
         form = VisitaForm()
-    return render(request, 'Visitas/nueva_visita.html', {'form': form, 'mensaje_error': mensaje_error})
+    return render(request, 'nueva_visita.html', {'form': form, 'mensaje_error': mensaje_error})
 
 #eliminar una visita existente
 def eliminar_visita(request, id):
