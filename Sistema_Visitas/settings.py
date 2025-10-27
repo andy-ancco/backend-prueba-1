@@ -31,7 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
-    '127.0.0.1'
+    '127.0.0.1',
+    'backend-prueba-1-e87n.onrender.com'
 ]
 
 STATIC_URL = '/static'
