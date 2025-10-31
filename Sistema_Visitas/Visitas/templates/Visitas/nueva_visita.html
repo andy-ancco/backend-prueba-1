@@ -1,0 +1,97 @@
+{% extends 'Visitas/base.html' %}
+
+{% block title %} Nueva Visita {% endblock %}
+
+<!--campos del formulario-->
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-green-50">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-200">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrar Visita</h1>
+
+    <!--mensaje general de error-->
+    {% if mensaje_error %}
+      <div class="mb-4 p-3 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
+        {{ mensaje_error }}
+      </div>
+    {% endif %}
+
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+
+      <!--nombre-->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <i class="fas fa-user"></i>
+        </span>
+        <input type="text" name="nombre" value="{{ form.nombre.value|default:'' }}" 
+          placeholder="Nombre del visitante"
+          class="w-full pl-10 pr-4 py-3 border {% if form.nombre.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
+        {% if form.nombre.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.nombre.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--RUT-->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <i class="fas fa-id-card"></i>
+        </span>
+        <input type="text" name="rut" value="{{ form.rut.value|default:'' }}" 
+          placeholder="RUT (ej: 12.345.678-9)"
+          class="w-full pl-10 pr-4 py-3 border {% if form.rut.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
+        {% if form.rut.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.rut.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--motivo-->
+      <div class="relative">
+        <span class="absolute top-3 left-0 flex items-start pl-3 text-gray-400">
+          <i class="fas fa-sticky-note"></i>
+        </span>
+        <textarea name="motivo_visita" rows="3" placeholder="Ingrese el motivo de la visita..."
+          class="w-full pl-10 pr-4 py-3 border {% if form.motivo_visita.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">{{ form.motivo_visita.value|default:'' }}</textarea>
+        {% if form.motivo_visita.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.motivo_visita.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--hora de entrada-->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <i class="fas fa-sign-in-alt"></i>
+        </span>
+        <input type="time" name="hora_entrada" value="{{ form.hora_entrada.value|default:'' }}"
+          class="w-full pl-10 pr-4 py-3 border {% if form.hora_entrada.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
+        {% if form.hora_entrada.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.hora_entrada.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--hora de salida-->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <i class="fas fa-sign-out-alt"></i>
+        </span>
+        <input type="time" name="hora_salida" value="{{ form.hora_salida.value|default:'' }}"
+          class="w-full pl-10 pr-4 py-3 border {% if form.hora_salida.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
+        {% if form.hora_salida.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.hora_salida.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--botones de guardar y de cancelar-->
+      <div class="flex justify-between space-x-3">
+        <button type="submit"
+          class="w-1/2 py-3 rounded-lg text-white bg-green-500 hover:bg-green-600 transition font-semibold">
+          Guardar
+        </button>
+        <a href="{% url 'lista_visitas' %}"
+          class="w-1/2 text-center py-3 rounded-lg text-white bg-red-500 hover:bg-red-600 transition font-semibold">
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

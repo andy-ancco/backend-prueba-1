@@ -2,16 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Visita
 from .forms import VisitaForm
 
-#mostrar la listas de visitas
+# Mostrar la lista de visitas
 def lista_visitas(request):
-    visitas = Visita.objects.all() #obtiene todas las visitas
+    visitas = Visita.objects.all()
     return render(request, 'lista_visitas.html', {'visitas': visitas})
 
-#crear una nueva visita
+# Ver el detalle de una visita específica
+def detalle_visita(request, id):
+    visita = get_object_or_404(Visita, id=id)
+    return render(request, 'detalle_visita.html', {'visita': visita})
+
+# Crear una nueva visita
 def nueva_visita(request):
     mensaje_error = ""
     if request.method == 'POST':
-        form = VisitaForm(request.POST) #crea el formulario con los datos enviados 
+        form = VisitaForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('lista_visitas')
@@ -21,8 +26,22 @@ def nueva_visita(request):
         form = VisitaForm()
     return render(request, 'nueva_visita.html', {'form': form, 'mensaje_error': mensaje_error})
 
-#eliminar una visita existente
+# Editar una visita existente
+def editar_visita(request, id):
+    visita = get_object_or_404(Visita, id=id)
+    if request.method == 'POST':
+        form = VisitaForm(request.POST, instance=visita)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_visitas')
+    else:
+        form = VisitaForm(instance=visita)
+    return render(request, 'editar_visita.html', {'form': form, 'visita': visita})
+
+# Eliminar una visita (con confirmación)
 def eliminar_visita(request, id):
     visita = get_object_or_404(Visita, id=id)
-    visita.delete() #elimina la visita de la base de datos 
-    return redirect('lista_visitas')
+    if request.method == 'POST':
+        visita.delete()
+        return redirect('lista_visitas')
+    return render(request, 'eliminar_visita.html', {'visita': visita})

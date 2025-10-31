@@ -11,10 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,9 +26,6 @@ SECRET_KEY = 'django-insecure-9tr5bs(^w!&m$a$f*-0^tip##=six%l_!!f0lbw*pzl&zt4#h7
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-STATIC_URL = '/static'
-STATIC_ROOT = BASE_DIR / 'public'
 
 
 # Application definition
@@ -81,15 +74,12 @@ WSGI_APPLICATION = 'Sistema_Visitas.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DBNAME"),
-        "USER": os.getenv("USER"),
-        "PASSWORD": os.getenv("PASSWORD"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

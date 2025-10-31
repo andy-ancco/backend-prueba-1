@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="bg-white shadow-lg rounded-xl p-6">
-  
+
   <!-- Encabezado con botón -->
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-gray-800">📋 Lista de Visitas</h1>
@@ -14,46 +14,60 @@
     </a>
   </div>
 
-  <!--encabezado de la tabla -->
+  <!-- Tabla de visitas -->
   <div class="overflow-x-auto">
     <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
       <thead>
         <tr class="bg-blue-600 text-white text-left">
-            <th class="px-6 py-3 text-sm font-semibold">Fecha</th>
-            <th class="px-6 py-3 text-sm font-semibold">Nombre</th>
-            <th class="px-6 py-3 text-sm font-semibold">RUT</th>
-            <th class="px-6 py-3 text-sm font-semibold">Motivo</th>
-            <th class="px-6 py-3 text-sm font-semibold">Hora Entrada</th>
-            <th class="px-6 py-3 text-sm font-semibold">Hora Salida</th>
-            <th class="px-6 py-3 text-sm font-semibold">Acciones</th> 
+          <th class="px-6 py-3 text-sm font-semibold">Fecha</th>
+          <th class="px-6 py-3 text-sm font-semibold">Nombre</th>
+          <th class="px-6 py-3 text-sm font-semibold">RUT</th>
+          <th class="px-6 py-3 text-sm font-semibold">Motivo</th>
+          <th class="px-6 py-3 text-sm font-semibold">Hora Entrada</th>
+          <th class="px-6 py-3 text-sm font-semibold">Hora Salida</th>
+          <th class="px-6 py-3 text-sm font-semibold text-center">Acciones</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         {% for visita in visitas %}
-            <tr class="border-b hover:bg-gray-50">
-            <td class="px-6 py-3">{{ visita.fecha }}</td>
-            <td class="px-6 py-3">{{ visita.nombre }}</td>
-            <td class="px-6 py-3">{{ visita.rut }}</td>
-            <td class="px-6 py-3">{{ visita.motivo_visita }}</td>
-            <td class="px-6 py-3">{{ visita.hora_entrada }}</td>
-            <td class="px-6 py-3">{{ visita.hora_salida }}</td>
-            <td class="px-6 py-3">
-                <!--botón eliminar-->
-                <a href="{% url 'eliminar_visita' visita.id %}"
-                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                onclick="return confirm('¿Seguro que deseas eliminar esta visita?')">
-                Eliminar
-                </a>
-            </td>
-            </tr>
+        <tr class="border-b hover:bg-gray-50 transition">
+          <td class="px-6 py-3">{{ visita.fecha }}</td>
+          <td class="px-6 py-3">{{ visita.nombre }}</td>
+          <td class="px-6 py-3">{{ visita.rut }}</td>
+          <td class="px-6 py-3">{{ visita.motivo_visita }}</td>
+          <td class="px-6 py-3">{{ visita.hora_entrada }}</td>
+          <td class="px-6 py-3">{{ visita.hora_salida }}</td>
+          <td class="px-6 py-3">
+            <menu class="flex flex-row gap-2 justify-center text-white">
+              <!-- Ver detalle -->
+              <a href="{% url 'detalle_visita' visita.id %}"
+                 class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded transition">
+                 Ver
+              </a>
+
+              <!-- Editar -->
+              <a href="{% url 'editar_visita' visita.id %}"
+                 class="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded transition">
+                 Editar
+              </a>
+
+              <!-- Eliminar -->
+              <a href="{% url 'eliminar_visita' visita.id %}"
+                 class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded transition"
+                 onclick="return confirm('¿Seguro que deseas eliminar esta visita?')">
+                 Eliminar
+              </a>
+            </menu>
+          </td>
+        </tr>
         {% empty %}
-            <tr>
-            <td colspan="7" class="px-6 py-4 text-center text-gray-500">
-                No hay visitas registradas.
-            </td>
-            </tr>
+        <tr>
+          <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+            No hay visitas registradas.
+          </td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
   </div>
 
