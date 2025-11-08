@@ -47,25 +47,25 @@ class VisitaAdmin(admin.ModelAdmin):
     def motivo_corto(self, obj):
         return (obj.motivo_visita[:40] + '...') if len(obj.motivo_visita) > 40 else obj.motivo_visita
 
-    #Validación inline 
+    # ✅ Validación tipo inline (sin romper la página ni redirigir)
     def save_model(self, request, obj, form, change):
         errores = []
 
-        
+        # Validar que la hora de salida sea posterior a la hora de entrada
         if obj.hora_entrada and obj.hora_salida:
             if obj.hora_salida <= obj.hora_entrada:
-                errores.append(" La hora de salida debe ser posterior a la hora de entrada.")
+                errores.append("⚠️ La hora de salida debe ser posterior a la hora de entrada.")
 
-        
+        # Validar duplicado de RUT + fecha
         if not change:
             if Visita.objects.filter(rut=obj.rut, fecha=obj.fecha).exists():
-                errores.append(f"ℹ Ya existe una visita registrada para el RUT {obj.rut} en la fecha {obj.fecha}.")
+                errores.append(f"ℹ️ Ya existe una visita registrada para el RUT {obj.rut} en la fecha {obj.fecha}.")
 
-       
+        # Si hay errores, mostrar y no guardar
         if errores:
             for e in errores:
                 self.message_user(request, e, level=messages.ERROR)
-            return  
+            return  # ❌ evita guardar el registro
 
-        
+        # ✅ Si todo está bien, guarda normalmente
         super().save_model(request, obj, form, change)

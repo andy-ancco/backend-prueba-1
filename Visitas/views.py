@@ -41,6 +41,7 @@ def editar_visita(request, id):
 # Eliminar una visita (con confirmación)
 def eliminar_visita(request, id):
     visita = get_object_or_404(Visita, id=id)
-    visita.delete()
-    return redirect("lista_visitas")
-
+    if request.method == 'POST':
+        visita.delete()
+        return redirect('lista_visitas')
+    return render(request, 'eliminar_visita.html', {'visita': visita})
