@@ -10,7 +10,7 @@ from .serializers import GroupSerializer, VisitaSerializer
 class VisitaViewSet(viewsets.ModelViewSet):
     queryset = Visita.objects.all().order_by("nombre")
     serializers_class = VisitaSerializer
-    permission_classes = [permissions.IsAuthencated]
+    permission_classes = [permissions.IsAuthenticated]
 
 # Mostrar la lista de visitas
 def lista_visitas(request):
