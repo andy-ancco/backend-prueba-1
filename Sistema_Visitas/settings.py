@@ -30,8 +30,15 @@ SECRET_KEY = 'django-insecure-9tr5bs(^w!&m$a$f*-0^tip##=six%l_!!f0lbw*pzl&zt4#h7
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    ".onrender.com"
+    ".onrender.com",
+    '127.0.0.1'
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500"
+]
+
+
 
 STATIC_URL = '/static'
 STATIC_ROOT = BASE_DIR / 'public'
@@ -47,12 +54,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Visitas',
-    'rest_framework'
+    'rest_framework',
+    'corsheaders',
 ]
 
+from datetime import timedelta
+
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 MIDDLEWARE = [
@@ -63,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleare'
 ]
 
 ROOT_URLCONF = 'Sistema_Visitas.urls'

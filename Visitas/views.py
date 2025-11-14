@@ -7,6 +7,7 @@ from rest_framework import permissions, viewsets
 
 from .serializers import GroupSerializer, VisitaSerializer
 
+
 class VisitaViewSet(viewsets.ModelViewSet):
     queryset = Visita.objects.all().order_by("nombre")
     serializers_class = VisitaSerializer
