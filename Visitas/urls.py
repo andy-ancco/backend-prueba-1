@@ -15,6 +15,7 @@ urlpatterns = [
     path("detalle/<int:id>/", views.detalle_visita, name="detalle_visita"),  # Ver detalle
     path("editar/<int:id>/", views.editar_visita, name="editar_visita"),     # Editar visita
     path("eliminar/<int:id>/", views.eliminar_visita, name="eliminar_visita"),  # Eliminar visita
+    path("api/", include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
