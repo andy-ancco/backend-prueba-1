@@ -56,4 +56,5 @@ def eliminar_visita(request, id):
     if request.method == 'POST':
         visita.delete()
         return redirect('lista_visitas')
+
     return render(request, 'eliminar_visita.html', {'visita': visita})
