@@ -2,13 +2,11 @@
 
 {% block title %} Nueva Visita {% endblock %}
 
-<!--campos del formulario-->
 {% block content %}
 <div class="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-green-50">
   <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-200">
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrar Visita</h1>
 
-    <!--mensaje general de error-->
     {% if mensaje_error %}
       <div class="mb-4 p-3 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
         {{ mensaje_error }}
@@ -23,7 +21,7 @@
         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
           <i class="fas fa-user"></i>
         </span>
-        <input type="text" name="nombre" value="{{ form.nombre.value|default:'' }}" 
+        <input type="text" name="nombre" value="{{ form.nombre.value|default:'' }}"
           placeholder="Nombre del visitante"
           class="w-full pl-10 pr-4 py-3 border {% if form.nombre.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
         {% if form.nombre.errors %}
@@ -36,7 +34,7 @@
         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
           <i class="fas fa-id-card"></i>
         </span>
-        <input type="text" name="rut" value="{{ form.rut.value|default:'' }}" 
+        <input type="text" name="rut" value="{{ form.rut.value|default:'' }}"
           placeholder="RUT (ej: 12.345.678-9)"
           class="w-full pl-10 pr-4 py-3 border {% if form.rut.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
         {% if form.rut.errors %}
@@ -53,6 +51,42 @@
           class="w-full pl-10 pr-4 py-3 border {% if form.motivo_visita.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">{{ form.motivo_visita.value|default:'' }}</textarea>
         {% if form.motivo_visita.errors %}
           <p class="text-red-500 text-sm mt-1">{{ form.motivo_visita.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--doctor (estilo igual a los demás)-->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <i class="fas fa-user-md"></i>
+        </span>
+        <input type="text" name="doctor" value="{{ form.doctor.value|default:'Sin asignar' }}"
+          placeholder="Nombre del doctor"
+          class="w-full pl-10 pr-4 py-3 border {% if form.doctor.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
+        {% if form.doctor.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.doctor.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!--area (select con mismo aspecto visual)-->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <i class="fas fa-hospital"></i>
+        </span>
+
+        <select name="area"
+            class="w-full pl-10 pr-4 py-3 border {% if form.area.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md bg-white focus:ring-2 focus:ring-green-400 focus:border-green-400">
+          <option value="">Seleccione un área</option>
+
+          <option value="Urgencias" {% if form.area.value == "Urgencias" %}selected{% endif %}>Urgencias</option>
+          <option value="Pediatría" {% if form.area.value == "Pediatría" %}selected{% endif %}>Pediatría</option>
+          <option value="Cardiología" {% if form.area.value == "Cardiología" %}selected{% endif %}>Cardiología</option>
+          <option value="Dermatología" {% if form.area.value == "Dermatología" %}selected{% endif %}>Dermatología</option>
+          <option value="Radiología" {% if form.area.value == "Radiología" %}selected{% endif %}>Radiología</option>
+          <option value="Traumatología" {% if form.area.value == "Traumatología" %}selected{% endif %}>Traumatología</option>
+        </select>
+
+        {% if form.area.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.area.errors.0 }}</p>
         {% endif %}
       </div>
 

@@ -2,19 +2,30 @@ from django import forms
 from .models import Visita
 import re
 
-#formulario basado en el modelo visita
+# formulario basado en el modelo visita
 class VisitaForm(forms.ModelForm):
     class Meta:
         model = Visita
-        fields = ['nombre', 'rut', 'motivo_visita', 'hora_entrada', 'hora_salida'] #campos que se veran en el formulario
+        fields = [
+            'nombre',
+            'rut',
+            'motivo_visita',
+            'hora_entrada',
+            'hora_salida',
+            'doctor',   # ← agregado
+            'area'      # ← agregado
+        ]
+
         widgets = {
             'motivo_visita': forms.Textarea(
                 attrs={'rows': 4, 'placeholder': 'Ingrese el motivo de la visita...'}
             ),
+            'area': forms.Select(attrs={'class': 'form-control'}),  # SELECT
+            'doctor': forms.TextInput(attrs={'placeholder': 'Nombre del doctor'})  # input normal
         }
-        #mensaje de error para cada campo 
+
         error_messages = {
-            'motivo_visita':{
+            'motivo_visita': {
                 'required': 'Por favor, ingresa el motivo de tu visita.',
             },
             'hora_entrada': {
@@ -31,16 +42,16 @@ class VisitaForm(forms.ModelForm):
             },
         }
 
-#validacion para el rut
+    # validación para el rut
     def clean_rut(self):
         rut = self.cleaned_data.get('rut')
 
-        #valida el rut con los puntos y guion
+        # valida el rut con los puntos y guion
         patron = r'^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$'
         if not re.match(patron, rut):
             raise forms.ValidationError("Formato incorrecto. Ejemplo: 12.345.678-9")
 
-        #elimina los puntos y el guion para validar el dígito verificador
+        # elimina los puntos y el guion para validar el dígito verificador
         rut = rut.replace(".", "").replace("-", "").upper()
 
         if len(rut) < 2:
@@ -53,7 +64,6 @@ class VisitaForm(forms.ModelForm):
         except ValueError:
             raise forms.ValidationError("RUT inválido.")
 
-        #calcula el digito verificador para garantizar que el rut existe
         suma = 0
         multiplicador = 2
         for digit in reversed(str(num)):

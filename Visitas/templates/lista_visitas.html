@@ -3,72 +3,82 @@
 {% block title %} Lista de Visitas {% endblock %}
 
 {% block content %}
-<div class="bg-white shadow-lg rounded-xl p-6">
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-green-50 py-10 px-6">
 
-  <!-- Encabezado con botón -->
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">📋 Lista de Visitas</h1>
-    <a href="{% url 'nueva_visita' %}"
-       class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow transition">
-       + Nueva Visita
-    </a>
-  </div>
+  <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-200">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Lista de Visitas</h1>
 
-  <!-- Tabla de visitas -->
-  <div class="overflow-x-auto">
-    <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
-      <thead>
-        <tr class="bg-blue-600 text-white text-left">
-          <th class="px-6 py-3 text-sm font-semibold">Fecha</th>
-          <th class="px-6 py-3 text-sm font-semibold">Nombre</th>
-          <th class="px-6 py-3 text-sm font-semibold">RUT</th>
-          <th class="px-6 py-3 text-sm font-semibold">Motivo</th>
-          <th class="px-6 py-3 text-sm font-semibold">Hora Entrada</th>
-          <th class="px-6 py-3 text-sm font-semibold">Hora Salida</th>
-          <th class="px-6 py-3 text-sm font-semibold text-center">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for visita in visitas %}
-        <tr class="border-b hover:bg-gray-50 transition">
-          <td class="px-6 py-3">{{ visita.fecha }}</td>
-          <td class="px-6 py-3">{{ visita.nombre }}</td>
-          <td class="px-6 py-3">{{ visita.rut }}</td>
-          <td class="px-6 py-3">{{ visita.motivo_visita }}</td>
-          <td class="px-6 py-3">{{ visita.hora_entrada }}</td>
-          <td class="px-6 py-3">{{ visita.hora_salida }}</td>
-          <td class="px-6 py-3">
-            <menu class="flex flex-row gap-2 justify-center text-white">
-              <!-- Ver detalle -->
+    <!-- Botón Nueva Visita -->
+    <div class="flex justify-end mb-4">
+      <a href="{% url 'nueva_visita' %}"
+        class="px-5 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-semibold shadow">
+        + Nueva Visita
+      </a>
+    </div>
+
+    <!-- Tabla de visitas -->
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse rounded-lg overflow-hidden">
+        <thead class="bg-green-100">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold">Nombre</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold">RUT</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold">Motivo</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold">Doctor</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold">Área</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold">Hora Entrada</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold">Hora Salida</th>
+            <th class="px-6 py-3 text-center text-sm font-semibold">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200">
+          {% for visita in visitas %}
+          <tr class="hover:bg-gray-50 transition">
+
+            <td class="px-6 py-3">{{ visita.nombre }}</td>
+            <td class="px-6 py-3">{{ visita.rut }}</td>
+            <td class="px-6 py-3">{{ visita.motivo_visita }}</td>
+            <td class="px-6 py-3">{{ visita.doctor }}</td>
+            <td class="px-6 py-3">{{ visita.area }}</td>
+            <td class="px-6 py-3">{{ visita.hora_entrada }}</td>
+            <td class="px-6 py-3">{{ visita.hora_salida }}</td>
+
+            <!-- Botones -->
+            <td class="px-6 py-3 flex justify-center space-x-3">
+
+              <!-- Ver -->
               <a href="{% url 'detalle_visita' visita.id %}"
-                 class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded transition">
-                 Ver
+                class="px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
+                <i class="fas fa-eye"></i>
               </a>
 
               <!-- Editar -->
               <a href="{% url 'editar_visita' visita.id %}"
-                 class="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded transition">
-                 Editar
+                class="px-3 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 transition">
+                <i class="fas fa-edit"></i>
               </a>
 
               <!-- Eliminar -->
               <a href="{% url 'eliminar_visita' visita.id %}"
-                 class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded transition"
-                 onclick="return confirm('¿Seguro que deseas eliminar esta visita?')">
-                 Eliminar
+                class="px-3 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition">
+                <i class="fas fa-trash"></i>
               </a>
-            </menu>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="7" class="px-6 py-4 text-center text-gray-500">
-            No hay visitas registradas.
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+
+            </td>
+          </tr>
+
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-gray-500 py-6">
+              No hay visitas registradas.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
 </div>

@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 
+TIME_INPUT_FORMATS = ['%H:%M', '%H:%M:%S']
 
 
 STATIC_URL = '/static'

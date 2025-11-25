@@ -9,21 +9,21 @@ from .serializers import VisitaSerializer
 
 
 class VisitaViewSet(viewsets.ModelViewSet):
-    queryset = Visita.objects.all().order_by("nombre")
+    queryset = Visita.objects.all()
     serializer_class = VisitaSerializer
     permission_classes = []
 
-# Mostrar la lista de visitas
+#Mostrar la lista de visitas
 def lista_visitas(request):
     visitas = Visita.objects.all()
     return render(request, 'lista_visitas.html', {'visitas': visitas})
 
-# Ver el detalle de una visita específica
+#Ver el detalle de una visita específica
 def detalle_visita(request, id):
     visita = get_object_or_404(Visita, id=id)
     return render(request, 'detalle_visita.html', {'visita': visita})
 
-# Crear una nueva visita
+#Crear una nueva visita
 def nueva_visita(request):
     mensaje_error = ""
     if request.method == 'POST':
@@ -37,7 +37,7 @@ def nueva_visita(request):
         form = VisitaForm()
     return render(request, 'nueva_visita.html', {'form': form, 'mensaje_error': mensaje_error})
 
-# Editar una visita existente
+#Editar una visita existente
 def editar_visita(request, id):
     visita = get_object_or_404(Visita, id=id)
     if request.method == 'POST':
@@ -49,10 +49,11 @@ def editar_visita(request, id):
         form = VisitaForm(instance=visita)
     return render(request, 'editar_visita.html', {'form': form, 'visita': visita})
 
-# Eliminar una visita (con confirmación)
+#Eliminar una visita (con confirmación)
 def eliminar_visita(request, id):
     visita = get_object_or_404(Visita, id=id)
+
     if request.method == 'POST':
         visita.delete()
         return redirect('lista_visitas')
-    return render(request, 'lista_visitas.html', {'visita': visita})
+    return render(request, 'eliminar_visita.html', {'visita': visita})
