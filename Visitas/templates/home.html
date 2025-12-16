@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio | Sistema Hospitalario de Visitas{% endblock %}
+
+{% block content %}
+<section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 to-blue-500 text-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-8 py-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+        Sistema Hospitalario de Visitas
+      </h1>
+      <p class="mt-4 text-blue-100 text-lg">
+        Control, trazabilidad y análisis inteligente de visitas para una gestión hospitalaria moderna y segura.
+      </p>
+
+      <div class="mt-8 flex gap-4">
+        <a href="{% url 'nueva_visita' %}" class="inline-flex items-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transition shadow">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+          Registrar Visita
+        </a>
+        <a href="{% url 'lista_visitas' %}" class="inline-flex items-center gap-2 border border-white/40 px-6 py-3 rounded-xl hover:bg-white/10 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+          Ver Visitas
+        </a>
+      </div>
+    </div>
+
+    <!-- Imagen decorativa -->
+    <div class="hidden md:block">
+      <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3" alt="Hospital" class="rounded-2xl shadow-2xl border border-white/20">
+    </div>
+  </div>
+</section>
+
+<section class="mt-16 max-w-7xl mx-auto px-6">
+  <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">
+    ¿Por qué usar nuestro sistema?
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition">
+      <div class="flex items-center gap-3 mb-4 text-blue-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <h3 class="text-lg font-semibold">Seguridad y Control</h3>
+      </div>
+      <p class="text-gray-600 text-sm">
+        Registro preciso de visitantes, horarios y áreas para garantizar trazabilidad y seguridad hospitalaria.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition">
+      <div class="flex items-center gap-3 mb-4 text-green-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <h3 class="text-lg font-semibold">Gestión Eficiente</h3>
+      </div>
+      <p class="text-gray-600 text-sm">
+        Optimiza tiempos de atención y reduce congestión mediante información clara y centralizada.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition">
+      <div class="flex items-center gap-3 mb-4 text-purple-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18m4-14v14m4-10v10M7 7v14M3 11v10" /></svg>
+        <h3 class="text-lg font-semibold">Análisis Inteligente</h3>
+      </div>
+      <p class="text-gray-600 text-sm">
+        Panel con recomendaciones automáticas para apoyar la toma de decisiones clínicas y administrativas.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="mt-20 text-center">
+  <p class="text-sm text-gray-500">
+    © {{ now|date:"Y" }} Sistema Hospitalario de Visitas · Desarrollo Académico
+  </p>
+</section>
+{% endblock %}

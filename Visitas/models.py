@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import date
 
-# OPCIONES DE ÁREA (para que sea SELECT)
+# opciones de areas medicas
 AREAS_CHOICES = [
     ('Urgencias', 'Urgencias'),
     ('Pediatría', 'Pediatría'),
@@ -20,7 +20,7 @@ class Visita(models.Model):
     hora_salida = models.TimeField()  # se puede ingresar la hora de forma manual
     fecha = models.DateField(default=date.today)  # se asigna el día automáticamente
 
-    # NUEVOS CAMPOS:
+   
     doctor = models.CharField(max_length=100, default="Sin asignar")
     area = models.CharField(max_length=50, choices=AREAS_CHOICES, default='Urgencias')
 

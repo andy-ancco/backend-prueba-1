@@ -1,32 +1,40 @@
 {% extends 'base.html' %}
-
-{% block title %}
-  Detalle de la Visita
-{% endblock %}
+{% block title %}Detalle de la Visita{% endblock %}
 
 {% block content %}
-  <h1 class="text-2xl font-bold mb-4">📄 Detalle de la Visita</h1>
+<div class="max-w-3xl mx-auto space-y-6">
 
-  <div class="bg-white p-6 rounded-xl shadow">
-    <h2 class="text-xl font-bold text-gray-800">{{ visita.nombre }}</h2>
+  <div class="bg-blue-600 text-white p-6 rounded-xl shadow">
+    <h1 class="text-3xl font-bold flex items-center gap-3">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      </svg>
+      Detalle de la Visita
+    </h1>
+  </div>
+      <!--Datos de la visita  -->
+  <div class="bg-white rounded-xl shadow p-8 space-y-4">
+    <h2 class="text-2xl font-bold text-gray-800">{{ visita.nombre }}</h2>
 
-    <div class="mt-4 text-gray-700">
-      <p><span class="font-semibold">Fecha:</span> {{ visita.fecha }}</p>
-      <p class="mt-2"><span class="font-semibold">RUT:</span> {{ visita.rut }}</p>
-      <p class="mt-2"><span class="font-semibold">Motivo:</span> {{ visita.motivo_visita }}</p>
-      <p class="mt-2"><span class="font-semibold">Hora de entrada:</span> {{ visita.hora_entrada }}</p>
-      <p class="mt-2"><span class="font-semibold">Hora de salida:</span> {{ visita.hora_salida }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+      <p><strong>Fecha:</strong> {{ visita.fecha }}</p>
+      <p><strong>RUT:</strong> {{ visita.rut }}</p>
+      <p><strong>Motivo:</strong> {{ visita.motivo_visita }}</p>
+      <p><strong>Entrada:</strong> {{ visita.hora_entrada }}</p>
+      <p><strong>Salida:</strong> {{ visita.hora_salida }}</p>
     </div>
-
-    <div class="mt-6 flex gap-3">
+       <!-- Editar visita  -->
+    <div class="flex gap-3 pt-6">
       <a href="{% url 'editar_visita' visita.id %}"
-         class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition">
-         Editar
+         class="px-5 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
+        Editar
       </a>
       <a href="{% url 'lista_visitas' %}"
-         class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
-         Volver a la lista
+         class="px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+        Volver
       </a>
     </div>
   </div>
+</div>
 {% endblock %}

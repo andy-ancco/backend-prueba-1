@@ -1,11 +1,36 @@
 {% extends 'base.html' %}
+{% block title %}Eliminar Visita{% endblock %}
 
 {% block content %}
-<h2>¿Seguro que deseas eliminar a {{ visita.nombre }}?</h2>
+<div class="max-w-xl mx-auto">
 
-<form method="POST">
-    {% csrf_token %}
-    <button class="bg-red-600 text-white px-4 py-2 rounded">Eliminar</button>
-    <a href="{% url 'lista_visitas' %}" class="px-4 py-2 bg-gray-300 rounded">Cancelar</a>
-</form>
+  <div class="bg-red-600 text-white p-6 rounded-xl shadow mb-6">
+    <h1 class="text-2xl font-bold flex items-center gap-3">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728"/>
+      </svg>
+      Eliminar Visita
+    </h1>
+  </div>
+
+  <div class="bg-white p-8 rounded-xl shadow text-center space-y-6">
+    <p class="text-lg text-gray-700">
+      ¿Estás seguro que deseas eliminar la visita de
+      <strong>{{ visita.nombre }}</strong>?
+    </p>
+
+    <form method="post" class="flex justify-center gap-4">
+      {% csrf_token %}
+      <a href="{% url 'lista_visitas' %}"
+         class="px-6 py-3 rounded-lg border text-gray-600 hover:bg-gray-50">
+        Cancelar
+      </a>
+      <button type="submit"
+              class="px-6 py-3 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">
+        Eliminar
+      </button>
+    </form>
+  </div>
+</div>
 {% endblock %}

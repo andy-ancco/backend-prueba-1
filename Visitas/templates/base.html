@@ -1,24 +1,135 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% block title %} Sistema de Visitas {% endblock %}
-    </title>
-    
-    <!-- Tailwind -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
-    <!-- FontAwesome (para íconos) -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  </head>
-  <body class="bg-gray-100 text-gray-800">
-    <nav class="bg-blue-600 p-4 text-white">
-      <a href="{% url 'lista_visitas' %}" class="font-bold">Sistema de Visitas</a>
-    </nav>
-    <div class="container mx-auto p-4">
-      {% block content %}{% endblock %}
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Sistema Hospitalario de Visitas{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-white text-gray-800 min-h-screen flex flex-col">
+
+  {% if request.path != '/accounts/login/' %}
+
+  <header class="bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- lo-->
+      <div class="flex items-center gap-3 text-blue-700 font-bold text-lg">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="h-8 w-8 text-blue-600"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 21h18M9 21V9h6v12M9 9V5a3 3 0 016 0v4" />
+        </svg>
+        Sistema Hospitalario
+      </div>
+
+      
+      <nav class="flex items-center gap-6 text-sm font-semibold">
+
+        {% if user.is_authenticated %}
+
+          <a href="{% url 'home' %}"
+             class="flex items-center gap-2 px-3 py-2 rounded-lg
+                    text-gray-700 hover:text-blue-700 hover:bg-blue-50 transition">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="h-5 w-5"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h5V15h4v6h5a1 1 0 001-1V10" />
+            </svg>
+            Inicio
+          </a>
+
+          <a href="{% url 'lista_visitas' %}"
+             class="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            Visitas
+          </a>
+
+          <a href="{% url 'nueva_visita' %}"
+             class="flex items-center gap-2 px-4 py-2 rounded-xl
+                    bg-blue-600 text-white hover:bg-blue-700 transition shadow">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4v16m8-8H4" />
+            </svg>
+            Registrar visita
+          </a>
+
+          <a href="{% url 'ia_recomendaciones' %}"
+             class="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 3v18m4-16v14m4-10v6M7 7v10M3 9v6" />
+            </svg>
+            Análisis Inteligente
+          </a>
+
+          <!--Cerrar sesion  -->
+          <div class="flex items-center gap-4 pl-4 border-l border-gray-200">
+
+            <div class="flex items-center gap-2 text-gray-600">
+              <svg class="h-5 w-5 text-gray-400"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5.121 17.804A13.937 13.937 0 0112 16
+                         c2.5 0 4.847.655 6.879 1.804M15 11
+                         a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {{ user.username }}
+            </div>
+
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit"
+                      class="text-sm text-red-600 hover:underline">
+                Cerrar sesión
+              </button>
+            </form>
+
+          </div>
+
+        {% else %}
+
+          <a href="{% url 'login' %}"
+             class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">
+            Iniciar sesión
+          </a>
+
+        {% endif %}
+
+      </nav>
     </div>
-  </body>
+  </header>
+
+  {% endif %}
+
+  <!-- contenido -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- footer -->
+  <footer class="bg-white border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-sm text-gray-500
+                flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>© {{ now|date:"Y" }} Sistema Hospitalario de Visitas</p>
+      <p class="text-gray-400">Proyecto académico · Ingeniería en Informática</p>
+    </div>
+  </footer>
+
+</body>
 </html>

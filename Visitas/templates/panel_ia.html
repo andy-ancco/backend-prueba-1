@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Análisis Inteligente{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+
+  <div class="bg-white rounded-2xl shadow-sm p-8 flex items-center gap-6">
+    <div class="flex items-center justify-center w-16 h-16 rounded-xl bg-blue-100">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M11 3v18m4-14v14m4-10v10M7 7v10M3 11v6" />
+      </svg>
+    </div>
+
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">
+        Panel de Análisis Inteligente
+      </h1>
+      <p class="mt-1 text-gray-600 text-sm">
+        Insights automáticos generados por IA para optimizar la gestión hospitalaria
+      </p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <div class="bg-white rounded-xl shadow-sm p-6 flex items-center gap-4">
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-blue-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1
+               M15 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </div>
+
+      <div>
+        <p class="text-sm text-gray-500">Total de visitas</p>
+        <p class="text-3xl font-bold text-blue-700">
+          {{ total_visitas }}
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 md:col-span-2">
+      <h2 class="flex items-center gap-2 text-lg font-semibold text-gray-800 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        Visitas por área
+      </h2>
+
+      <div class="overflow-hidden rounded-lg border border-gray-200">
+        <table class="w-full text-sm">
+          <thead class="bg-blue-600 text-white">
+            <tr>
+              <th class="px-4 py-3 text-left font-semibold">Área</th>
+              <th class="px-4 py-3 text-right font-semibold">Cantidad</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {% for v in visitas %}
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3">{{ v.area }}</td>
+              <td class="px-4 py-3 text-right font-medium">{{ v.total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="2" class="px-4 py-6 text-center text-gray-500 italic">
+                No hay datos disponibles
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <h2 class="flex items-center gap-2 text-xl font-semibold text-gray-900 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 6a6 6 0 00-3 11.2V20h6v-2.8A6 6 0 0012 6z" />
+      </svg>
+      Recomendaciones generadas por IA
+    </h2>
+
+    <div class="bg-purple-50 border border-purple-200 rounded-lg p-5 text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+      {{ recomendacion }}
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    <a href="{% url 'lista_visitas' %}"
+       class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition shadow">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 19l-7-7 7-7m8 14V5" />
+      </svg>
+      Volver a lista de visitas
+    </a>
+  </div>
+
+</div>
+{% endblock %}

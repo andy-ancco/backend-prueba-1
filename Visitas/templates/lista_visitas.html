@@ -1,79 +1,100 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de Visitas{% endblock %}
+{% block title %}Gestión de Visitas{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 py-10 px-6">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-white py-10 px-4">
 
-  <div class="max-w-6xl mx-auto bg-white shadow-2xl rounded-2xl p-10 border border-gray-100">
-    <h1 class="text-4xl font-extrabold text-gray-900 mb-6 text-center tracking-tight">
-      👥 Lista de Visitas
-    </h1>
+  <div class="max-w-7xl mx-auto space-y-8">
 
-    <!-- Botón Nueva Visita -->
-    <div class="flex justify-end mb-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 bg-white rounded-2xl shadow-md border p-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-3">
+          <svg class="h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          Gestión de Visitas
+        </h1>
+        <p class="mt-2 text-sm text-gray-600">
+          Registro, control y seguimiento de visitas hospitalarias
+        </p>
+      </div>
+
       <a href="{% url 'nueva_visita' %}"
-        class="px-5 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 active:scale-95 shadow-md transition font-semibold flex items-center gap-2">
-        <i class="fas fa-user-plus"></i> Nueva Visita
+         class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow-lg">
+        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Registrar visita
       </a>
     </div>
 
-    <!-- Tabla -->
-    <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-green-100/80">
+    <div class="bg-white border rounded-2xl shadow-xl overflow-hidden">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gradient-to-r from-blue-600 to-blue-500 text-white">
           <tr>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">Nombre</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">RUT</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">Motivo</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">Doctor</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">Área</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">Entrada</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide">Salida</th>
-            <th class="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wide">Acciones</th>
+            <th class="px-6 py-4 text-left font-semibold">Visitante</th>
+            <th class="px-6 py-4 text-left font-semibold">RUT</th>
+            <th class="px-6 py-4 text-left font-semibold">Motivo</th>
+            <th class="px-6 py-4 text-left font-semibold">Doctor</th>
+            <th class="px-6 py-4 text-left font-semibold">Área</th>
+            <th class="px-6 py-4 text-left font-semibold">Entrada</th>
+            <th class="px-6 py-4 text-left font-semibold">Salida</th>
+            <th class="px-6 py-4 text-center font-semibold">Acciones</th>
           </tr>
         </thead>
 
-        <tbody class="divide-y divide-gray-100 bg-white">
+        <tbody class="divide-y">
           {% for visita in visitas %}
-          <tr class="hover:bg-gray-50/70 transition cursor-pointer">
-            <td class="px-6 py-4">{{ visita.nombre }}</td>
+          <tr class="hover:bg-blue-50 transition">
+            <td class="px-6 py-4 font-medium text-gray-900">{{ visita.nombre }}</td>
             <td class="px-6 py-4">{{ visita.rut }}</td>
-            <td class="px-6 py-4">{{ visita.motivo_visita }}</td>
+            <td class="px-6 py-4 max-w-xs truncate">{{ visita.motivo_visita }}</td>
             <td class="px-6 py-4">{{ visita.doctor }}</td>
-            <td class="px-6 py-4">{{ visita.area }}</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
+                </svg>
+                {{ visita.area }}
+              </span>
+            </td>
             <td class="px-6 py-4">{{ visita.hora_entrada }}</td>
             <td class="px-6 py-4">{{ visita.hora_salida }}</td>
 
-            <td class="px-6 py-4 text-center">
-              <div class="flex items-center justify-center gap-3">
+            <td class="px-6 py-4">
+              <div class="flex justify-center gap-3">
 
-                <!-- Ver -->
-                <a href="{% url 'detalle_visita' visita.id %}"
-                  class="p-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition shadow-sm">
-                  <i class="fas fa-eye"></i>
+                <a href="{% url 'detalle_visita' visita.id %}" title="Ver detalle"
+                   class="p-2 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
                 </a>
 
-                <!-- Editar -->
-                <a href="{% url 'editar_visita' visita.id %}"
-                  class="p-2 rounded-lg text-white bg-yellow-500 hover:bg-yellow-600 transition shadow-sm">
-                  <i class="fas fa-edit"></i>
+                <a href="{% url 'editar_visita' visita.id %}" title="Editar visita"
+                   class="p-2 rounded-xl bg-yellow-100 text-yellow-600 hover:bg-yellow-200 transition">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
                 </a>
 
-                <!-- Eliminar -->
-                <a href="{% url 'eliminar_visita' visita.id %}"
-                  class="p-2 rounded-lg text-white bg-red-500 hover:bg-red-600 transition shadow-sm">
-                  <i class="fas fa-trash"></i>
+                <a href="{% url 'eliminar_visita' visita.id %}" title="Eliminar visita"
+                   class="p-2 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 transition">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </a>
 
               </div>
             </td>
           </tr>
-
           {% empty %}
           <tr>
-            <td colspan="8" class="text-center text-gray-500 py-8 italic">
-              🚫 No hay visitas registradas.
+            <td colspan="8" class="text-center py-12 text-gray-500 italic">
+              No hay visitas registradas
             </td>
           </tr>
           {% endfor %}

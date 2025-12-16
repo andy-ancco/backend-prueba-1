@@ -1,131 +1,152 @@
-{% extends 'base.html' %}
-
-{% block title %} Nueva Visita {% endblock %}
+{% extends "base.html" %}
+{% block title %}Registrar nueva visita{% endblock %}
 
 {% block content %}
-<div class="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-green-50">
-  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-200">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrar Visita</h1>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-white py-10 px-4">
 
-    {% if mensaje_error %}
-      <div class="mb-4 p-3 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
-        {{ mensaje_error }}
-      </div>
-    {% endif %}
+  <div class="max-w-4xl mx-auto space-y-8">
 
-    <form method="post" class="space-y-4">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl shadow-lg p-8 text-white">
+      <h1 class="text-3xl font-bold flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 4v16m8-8H4"/>
+        </svg>
+        Registrar nueva visita
+      </h1>
+      <p class="mt-2 text-blue-100">
+        Complete la información requerida para registrar una visita hospitalaria.
+      </p>
+    </div>
+
+    <form method="post" class="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 space-y-6">
       {% csrf_token %}
 
-      <!--nombre-->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="fas fa-user"></i>
-        </span>
-        <input type="text" name="nombre" value="{{ form.nombre.value|default:'' }}"
-          placeholder="Nombre del visitante"
-          class="w-full pl-10 pr-4 py-3 border {% if form.nombre.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
-        {% if form.nombre.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.nombre.errors.0 }}</p>
-        {% endif %}
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">
+          Nombre del visitante
+        </label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5.121 17.804A13.937 13.937 0 0112 15
+                       c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <input type="text" name="nombre"
+                 value="{{ form.nombre.value|default:'' }}"
+                 class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300
+                        focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                 placeholder="Nombre completo">
+        </div>
       </div>
 
-      <!--RUT-->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="fas fa-id-card"></i>
-        </span>
-        <input type="text" name="rut" value="{{ form.rut.value|default:'' }}"
-          placeholder="RUT (ej: 12.345.678-9)"
-          class="w-full pl-10 pr-4 py-3 border {% if form.rut.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
-        {% if form.rut.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.rut.errors.0 }}</p>
-        {% endif %}
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">RUT</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 7h10M7 11h10M7 15h6M4 5h16v14H4z"/>
+            </svg>
+          </div>
+          <input type="text" name="rut"
+                 value="{{ form.rut.value|default:'' }}"
+                 class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300
+                        focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                 placeholder="12.345.678-9">
+        </div>
       </div>
 
-      <!--motivo-->
-      <div class="relative">
-        <span class="absolute top-3 left-0 flex items-start pl-3 text-gray-400">
-          <i class="fas fa-sticky-note"></i>
-        </span>
-        <textarea name="motivo_visita" rows="3" placeholder="Ingrese el motivo de la visita..."
-          class="w-full pl-10 pr-4 py-3 border {% if form.motivo_visita.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">{{ form.motivo_visita.value|default:'' }}</textarea>
-        {% if form.motivo_visita.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.motivo_visita.errors.0 }}</p>
-        {% endif %}
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">
+          Motivo de la visita
+        </label>
+        <div class="relative">
+          <div class="absolute top-3 left-3 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 6h8M8 10h8M8 14h6M5 4h14v16H5z"/>
+            </svg>
+          </div>
+          <textarea name="motivo_visita" rows="4"
+                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300
+                           focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Describa el motivo de la visita...">{{ form.motivo_visita.value|default:'' }}</textarea>
+        </div>
       </div>
 
-      <!--doctor (estilo igual a los demás)-->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="fas fa-user-md"></i>
-        </span>
-        <input type="text" name="doctor" value="{{ form.doctor.value|default:'Sin asignar' }}"
-          placeholder="Nombre del doctor"
-          class="w-full pl-10 pr-4 py-3 border {% if form.doctor.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
-        {% if form.doctor.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.doctor.errors.0 }}</p>
-        {% endif %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Doctor</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4
+                         9 5.567 9 7.5 10.343 11 12 11z"/>
+              </svg>
+            </div>
+            <input type="text" name="doctor"
+                   value="{{ form.doctor.value|default:'Sin asignar' }}"
+                   class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Área</label>
+          <select name="area"
+                  class="w-full py-3 px-4 rounded-lg border border-gray-300
+                         focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <option>Urgencias</option>
+            <option>Pediatría</option>
+            <option>Cardiología</option>
+            <option>Radiología</option>
+            <option>Traumatología</option>
+          </select>
+        </div>
+
       </div>
 
-      <!--area (select con mismo aspecto visual)-->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="fas fa-hospital"></i>
-        </span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">
+            Hora de entrada
+          </label>
+          <input type="time" name="hora_entrada"
+                 class="w-full py-3 px-4 rounded-lg border border-gray-300">
+        </div>
 
-        <select name="area"
-            class="w-full pl-10 pr-4 py-3 border {% if form.area.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md bg-white focus:ring-2 focus:ring-green-400 focus:border-green-400">
-          <option value="">Seleccione un área</option>
-
-          <option value="Urgencias" {% if form.area.value == "Urgencias" %}selected{% endif %}>Urgencias</option>
-          <option value="Pediatría" {% if form.area.value == "Pediatría" %}selected{% endif %}>Pediatría</option>
-          <option value="Cardiología" {% if form.area.value == "Cardiología" %}selected{% endif %}>Cardiología</option>
-          <option value="Dermatología" {% if form.area.value == "Dermatología" %}selected{% endif %}>Dermatología</option>
-          <option value="Radiología" {% if form.area.value == "Radiología" %}selected{% endif %}>Radiología</option>
-          <option value="Traumatología" {% if form.area.value == "Traumatología" %}selected{% endif %}>Traumatología</option>
-        </select>
-
-        {% if form.area.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.area.errors.0 }}</p>
-        {% endif %}
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">
+            Hora de salida
+          </label>
+          <input type="time" name="hora_salida"
+                 class="w-full py-3 px-4 rounded-lg border border-gray-300">
+        </div>
       </div>
 
-      <!--hora de entrada-->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="fas fa-sign-in-alt"></i>
-        </span>
-        <input type="time" name="hora_entrada" value="{{ form.hora_entrada.value|default:'' }}"
-          class="w-full pl-10 pr-4 py-3 border {% if form.hora_entrada.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
-        {% if form.hora_entrada.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.hora_entrada.errors.0 }}</p>
-        {% endif %}
-      </div>
-
-      <!--hora de salida-->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="fas fa-sign-out-alt"></i>
-        </span>
-        <input type="time" name="hora_salida" value="{{ form.hora_salida.value|default:'' }}"
-          class="w-full pl-10 pr-4 py-3 border {% if form.hora_salida.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400">
-        {% if form.hora_salida.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.hora_salida.errors.0 }}</p>
-        {% endif %}
-      </div>
-
-      <!--botones de guardar y de cancelar-->
-      <div class="flex justify-between space-x-3">
-        <button type="submit"
-          class="w-1/2 py-3 rounded-lg text-white bg-green-500 hover:bg-green-600 transition font-semibold">
-          Guardar
-        </button>
+      <div class="flex justify-end gap-4 pt-6 border-t">
         <a href="{% url 'lista_visitas' %}"
-          class="w-1/2 text-center py-3 rounded-lg text-white bg-red-500 hover:bg-red-600 transition font-semibold">
+           class="px-6 py-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
           Cancelar
         </a>
+        <button type="submit"
+                class="px-8 py-3 rounded-lg bg-blue-600 text-white font-semibold
+                       hover:bg-blue-700 transition shadow">
+          Guardar visita
+        </button>
       </div>
+
     </form>
   </div>
 </div>
 {% endblock %}
+

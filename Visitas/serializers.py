@@ -5,7 +5,8 @@ from .models import Visita
 class VisitaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visita
-        fields = '__all__' 
+        fields = "__all__"
+
 
 
 class GroupSerializer:
